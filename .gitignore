@@ -1,0 +1,8 @@
+# Ignore compiled binaries
+build
+*.out
+*.exe
+
+# Ignore rendered images
+*.ppm
+*.png
