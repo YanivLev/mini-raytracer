@@ -19,6 +19,7 @@ class vec3 {
         double operator[](int i) const { return e[i]; }
         double& operator[](int i) { return e[i]; }
         
+        // Adding vector v
         vec3& operator+=(const vec3& v) {
             e[0] += v.e[0];
             e[1] += v.e[1];
@@ -26,12 +27,28 @@ class vec3 {
             return *this;
         }
 
-        vec3& operator*=(const vec3& v) {
-            e[0] *= v.e[0];
-            e[1] *= v.e[1];
-            e[2] *= v.e[2];
+        // Multiplying by a scalar t
+        vec3& operator*=(double t) {
+            e[0] *= t;
+            e[1] *= t;
+            e[2] *= t;
             return *this;
         }
+
+        // Dividing by a scalar t
+        vec3& operator/=(double t) {
+            return *this *= 1/t;
+        }
+
+        // Magnitude of the vector
+        double length() const {
+            return sqrt(length_squared());
+        }
+        
+        double length_squared() const {
+            return e[0]*e[0] + e[1]*e[1] + e[2]*e[2];
+        }
+        
 
     
 };
