@@ -1,8 +1,8 @@
 CXX = clang++
-CXXFLAGS = -std=c++17 -Wall -O3
+CXXFLAGS = -std=c++17 -O3
 
 main: main.cpp
-	$(CXX) $(CXXFLAGS) -o main main.cpp
+	$(CXX) $(CXXFLAGS) main.cpp -o main 
 
 run: main
 	./main
