@@ -5,4 +5,7 @@ main: main.cpp
 	$(CXX) $(CXXFLAGS) main.cpp -o main 
 
 run: main
-	./main
+	./main > image.ppm
+
+clean: 
+	rm -f main image.ppm
