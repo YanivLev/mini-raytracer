@@ -4,8 +4,6 @@
 #include "hittable.h"
 #include "vec3.h"
 
-using namespace std;
-
 class sphere : public hittable {
     private:
         point3 center;
