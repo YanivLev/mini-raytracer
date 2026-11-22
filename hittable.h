@@ -6,8 +6,17 @@
 class hit_record {
     public:
         point3 hit_point;
-        vec3  surface_normal;
+        vec3 surface_normal;
         double t;
+        bool front_face;
+
+        void set_face_normal(const ray& ray, const vec3& outward_normal) {
+            //Sets the hit record normal vector
+            //outward_normal is assumed to have unit length
+
+            front_face = dot(ray.direction(), outward_normal) < 0;        
+            surface_normal = front_face ? outward_normal : -outward_normal;
+        }
 };
 
 class hittable {

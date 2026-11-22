@@ -39,9 +39,10 @@ class sphere : public hittable {
                 }
             }
 
+            //Value assigning to hit_record object
             hit_record.t = root;
             hit_record.hit_point = ray.at(hit_record.t);
-            hit_record.surface_normal - (hit_record.hit_point - center) / radius;
+            hit_record.surface_normal = (hit_record.hit_point - center) / radius;
 
             return true;
         }
