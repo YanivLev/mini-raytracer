@@ -42,7 +42,9 @@ class sphere : public hittable {
             //Value assigning to hit_record object
             hit_record.t = root;
             hit_record.hit_point = ray.at(hit_record.t);
-            hit_record.surface_normal = (hit_record.hit_point - center) / radius;
+            vec3 outward_normal = (hit_record.hit_point - center) / radius;
+            //Checks what does the dot product of the vectors returns and sets normal accordingly
+            hit_record.set_face_normal(ray, outward_normal);
 
             return true;
         }
