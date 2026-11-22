@@ -1,8 +1,7 @@
-#include "vec3.h"
-#include "ray.h"
-#include "color.h"
-
-#include <iostream>
+#include "util.h"
+#include "hittable.h"
+#include "hittable_list.h"
+#include "sphere.h"
 
 using namespace std;
 
