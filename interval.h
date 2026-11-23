@@ -1,12 +1,14 @@
 #ifndef INTERVAL_H
 #define INTERVAL_H
 
+#include "util.h"
+
 class interval {
     public:
         double min, max;
 
         //Default to an empty range (min > max) so no value is inside until bounds are set
-        interval() : min(infinity) , max(-infinity) {};
+        interval() : min(+infinity) , max(-infinity) {};
 
         interval(double min, double max) : min(min), max(max) {};
 
@@ -29,7 +31,7 @@ class interval {
 };
 
 //Out of bound definitions for the static class constants
-const interval interval::empty = interval(infinity, -infinity);
-const interval interval::universe = interval(-infinity, infinity);
+const interval interval::empty = interval(+infinity, -infinity);
+const interval interval::universe = interval(-infinity, +infinity);
 
 #endif
