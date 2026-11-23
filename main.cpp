@@ -6,24 +6,9 @@
 
 using namespace std;
 
-double hit_sphere(const point3& center, double radius, const ray& r) {
-    vec3 oc = center - r.origin();
-    auto a = dot(r.direction(), r.direction());
-    auto b = -2 * dot(r.direction(), oc);
-    auto c = oc.length_squared() - (radius * radius);
-    auto discriminant = (b * b) - (4 * a * c);
-    // Smaller root corresponds to the near surface intersection along the ray.
-    if (discriminant < 0) {
-        return -1.0;
-    }
-    else {
-        return (-b - sqrt(discriminant) ) / (2.0 * a);
-    }
-} 
-
 color ray_color(const ray& r, const hittable& world) {
     hit_record rec;
-    if (world.hit(r, 0, infinity, rec)) {
+    if (world.hit(r, interval(0, infinity), rec)) {
         return 0.5 * (rec.surface_normal + color(1,1,1));
     }
     

@@ -1,8 +1,6 @@
 #ifndef SPHERE_H
 #define SPHERE_H
 
-#include "hittable.h"
-
 class sphere : public hittable {
     private:
         point3 center;
@@ -12,11 +10,11 @@ class sphere : public hittable {
         //Sphere constructor, ensures that no negative radius is received
         sphere(const point3& center, double radius) : center(center), radius(fmax(0, radius)) {}
 
-        bool hit(const ray& ray, double ray_tmin, double ray_tmax, hit_record& hit_record) const override {
-            vec3 oc = center - ray.origin();
-            auto a = ray.direction().length_squared();
-            //auto b = dot(ray.direction(), oc); h = -1/2 * b, fewer multiplications
-            auto h = dot(ray.direction(), oc);
+        bool hit(const ray& r, interval ray_t, hit_record& rec) const override {
+            vec3 oc = center - r.origin();
+            auto a = r.direction().length_squared();
+            //auto b = dot(r.direction(), oc); h = -1/2 * b, fewer multiplications
+            auto h = dot(r.direction(), oc);
             auto c = oc.length_squared() - (radius * radius);
 
             auto discriminant = (h * h) - (a * c);
@@ -29,19 +27,18 @@ class sphere : public hittable {
             //Finding the closes root closest to the camera, evaluating min and max out of result
             auto root = (h - sqrtd) / a;
             //If the first root is out of bound try the second one, if both are out of bound return false
-            if (root <= ray_tmin || root >= ray_tmax) {
+            if (!ray_t.surrounds(root)) {
                 root = (h + sqrtd) / a;
-                if (root <= ray_tmin || root >= ray_tmax) {
+                if (!ray_t.surrounds(root))
                     return false;
                 }
-            }
 
             //Value assigning to hit_record object
-            hit_record.t = root;
-            hit_record.hit_point = ray.at(hit_record.t);
-            vec3 outward_normal = (hit_record.hit_point - center) / radius;
+            rec.t = root;
+            rec.hit_point = r.at(rec.t);
+            vec3 outward_normal = (rec.hit_point - center) / radius;
             //Checks what does the dot product of the vectors returns and sets normal accordingly
-            hit_record.set_face_normal(ray, outward_normal);
+            rec.set_face_normal(r, outward_normal);
 
             return true;
         }
