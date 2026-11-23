@@ -5,9 +5,9 @@
 #include <memory>
 #include <iostream>
 #include <limits>
-#include <color.h>
-#include <vec3.h>
-#include <ray.h>
+#include "color.h"
+#include "vec3.h"
+#include "ray.h"
 
 using std::shared_ptr;
 using std::make_shared;

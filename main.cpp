@@ -20,16 +20,13 @@ double hit_sphere(const point3& center, double radius, const ray& r) {
     }
 } 
 
-color ray_color(const ray& ray) {
-    point3 center = point3(0,0,-1.0);
-    double radius = 0.5;
-    double target_hit = hit_sphere(center,radius, ray);
-    if (target_hit > 0.0) {
-        vec3 normal =  unit_vector(ray.at(target_hit) - center);
-        return 0.5 * color(normal.x() + 1, normal.y() + 1, normal.z() + 1);
+color ray_color(const ray& r, const hittable& world) {
+    hit_record rec;
+    if (world.hit(r, 0, infinity, rec)) {
+        return 0.5 * (rec.surface_normal + color(1,1,1));
     }
     
-    vec3 unit_direction = unit_vector(ray.direction());
+    vec3 unit_direction = unit_vector(r.direction());
     auto a = 0.5*(unit_direction.y() + 1.0);
     return (1.0-a)*color(1.0, 1.0, 1.0) + a*color(0.5, 0.7, 1.0);
 }
@@ -42,6 +39,11 @@ int main() {
     
     int image_height = int( image_width / aspect_ratio );
     image_height = (image_height < 1) ? 1 : image_height;
+
+    hittable_list world;
+
+    world.add(make_shared<sphere>(point3(0,0,-1), 0.5));
+    world.add(make_shared<sphere>(point3(0,-100.5,-1), 100));
 
     //Camera
     auto focal_length = 1.0;
@@ -72,7 +74,7 @@ int main() {
             auto ray_direction = pixel_center - camera_center;
             ray r(camera_center, ray_direction);
 
-            color pixel_color = ray_color(r);
+            color pixel_color = ray_color(r, world);
             write_color(cout, pixel_color);
         }
     }
