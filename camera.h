@@ -24,7 +24,6 @@ class camera {
                     write_color(std::cout, pixel_color);
                 }
             }
-
             std::clog << "\rDone.                 \n";
         }
 
@@ -74,4 +73,5 @@ class camera {
             return (1.0-a)*color(1.0, 1.0, 1.0) + a*color(0.5, 0.7, 1.0);
         }
 };
+
 #endif
